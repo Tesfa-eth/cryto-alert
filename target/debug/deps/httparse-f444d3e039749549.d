@@ -1,0 +1,11 @@
+/Users/tesfatsionshiferaw/crypto_alert/target/debug/deps/httparse-f444d3e039749549.rmeta: /Users/tesfatsionshiferaw/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.8.0/src/lib.rs /Users/tesfatsionshiferaw/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.8.0/src/iter.rs /Users/tesfatsionshiferaw/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.8.0/src/macros.rs /Users/tesfatsionshiferaw/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.8.0/src/simd/mod.rs /Users/tesfatsionshiferaw/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.8.0/src/simd/fallback.rs
+
+/Users/tesfatsionshiferaw/crypto_alert/target/debug/deps/libhttparse-f444d3e039749549.rlib: /Users/tesfatsionshiferaw/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.8.0/src/lib.rs /Users/tesfatsionshiferaw/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.8.0/src/iter.rs /Users/tesfatsionshiferaw/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.8.0/src/macros.rs /Users/tesfatsionshiferaw/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.8.0/src/simd/mod.rs /Users/tesfatsionshiferaw/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.8.0/src/simd/fallback.rs
+
+/Users/tesfatsionshiferaw/crypto_alert/target/debug/deps/httparse-f444d3e039749549.d: /Users/tesfatsionshiferaw/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.8.0/src/lib.rs /Users/tesfatsionshiferaw/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.8.0/src/iter.rs /Users/tesfatsionshiferaw/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.8.0/src/macros.rs /Users/tesfatsionshiferaw/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.8.0/src/simd/mod.rs /Users/tesfatsionshiferaw/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.8.0/src/simd/fallback.rs
+
+/Users/tesfatsionshiferaw/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.8.0/src/lib.rs:
+/Users/tesfatsionshiferaw/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.8.0/src/iter.rs:
+/Users/tesfatsionshiferaw/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.8.0/src/macros.rs:
+/Users/tesfatsionshiferaw/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.8.0/src/simd/mod.rs:
+/Users/tesfatsionshiferaw/.cargo/registry/src/github.com-1ecc6299db9ec823/httparse-1.8.0/src/simd/fallback.rs:
