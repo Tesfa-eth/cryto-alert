@@ -61,7 +61,7 @@ async fn monitor_price_change(sell_token: &str, buy_token: &str, interval: u64) 
     let mut current_price = match get_price(&url).await {
         Ok(price) => price,
         Err(e) => {
-            println!("Failed to fetch initial price: {:?}", e);
+            println!("Failed to fetch initial price: {:?}. Please make sure you are using a valid token name", e);
             return Ok(());  // Return early.
         }
     };
