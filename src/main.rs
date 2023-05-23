@@ -8,7 +8,7 @@ use tokio::time::sleep;
 use std::time::Duration;
 use serde_json::{Value, from_str};
 
-// Function to prompt the user for input and return it as a string.
+// prompt the user for input and return it as a string.
 fn get_input(prompt: &str) -> io::Result<String> {
     // Print the prompt to stdout.
     print!("{}", prompt);
@@ -24,11 +24,83 @@ fn get_input(prompt: &str) -> io::Result<String> {
     Ok(input)
 }
 
-// Function to validate the user's input as a u64.
+// validate the user's input as a u64.
 fn validate_u64_input(input: &str) -> Result<u64, Box<dyn Error>> {
     let interval = u64::from_str(input)?;
 
     Ok(interval)
+}
+
+// Monitors the price of DAI on the 0x API.
+// If the price changes, it prints a message and returns.
+async fn monitor_price_change(url: &str, interval: u64) -> Result<(), Box<dyn Error>> {
+    let mut previous_price = None;
+
+    loop {
+        // Get the current price from the 0x API.
+        let current_price = get_price(url).await?;
+
+        // If there is a previous price and it's different from the current price, print a message and return.
+        if let Some(previous_price) = previous_price {
+            if previous_price != current_price {
+                println!("Price changed from {} to {}", previous_price, current_price);
+                return Ok(());
+            }
+        }
+
+        // Set the previous price to the current price for the next iteration.
+        previous_price = Some(current_price);
+
+               // Wait for the specified interval.
+        sleep(Duration::from_secs(interval)).await;
+    }
+}
+
+// get the current price from the 0x API.
+async fn get_price(url: &str) -> Result<String, Box<dyn Error>> {
+    println!("Fetching current price...");
+    
+    // Send a GET request to the 0x API and get the response data.
+    let response_data = send_get_request(url).await?;
+
+    // Parse the price from the response data.
+    let price = parse_price(&response_data)?;
+
+    println!("Current price: {}", price);
+    Ok(price)
+}
+
+// send a GET request to the given URL and returns the response data.
+async fn send_get_request(url: &str) -> Result<String, Box<dyn Error>> {
+    // Create a new Client.
+    let client = Client::new();
+    // println!("Sending GET request to 0x API...");
+
+    // Send the GET request and get the Response.
+    let response = client.get(url).send().await?;
+
+    // Check if the status is success.
+    if !response.status().is_success() {
+        return Err("GET request failed".into());
+    }
+
+    // Get the response body as a string.
+    let body = response.text().await?;
+
+    Ok(body)
+}
+
+// Function to parse the price from the 0x API response data.
+fn parse_price(response_data: &str) -> Result<String, Box<dyn Error>> {
+    // Parse the response data into a Value.
+    let parsed_data: Value = from_str(response_data)?;
+
+    // Extract the price from the Value.
+    let price = parsed_data["price"]
+        .as_str()
+        .ok_or("Failed to extract price")?;
+
+    Ok(price.to_string())
 }
 
 fn main() {
@@ -68,76 +140,4 @@ fn main() {
 
     // Block on the price monitoring task.
     rt.block_on(monitor_price_change(&url, interval)).unwrap();
-}
-
-// Monitors the price of DAI on the 0x API.
-// If the price changes, it prints a message and returns.
-async fn monitor_price_change(url: &str, interval: u64) -> Result<(), Box<dyn Error>> {
-    let mut previous_price = None;
-
-    loop {
-        // Get the current price from the 0x API.
-        let current_price = get_price(url).await?;
-
-        // If there is a previous price and it's different from the current price, print a message and return.
-        if let Some(previous_price) = previous_price {
-            if previous_price != current_price {
-                println!("Price changed from {} to {}", previous_price, current_price);
-                return Ok(());
-            }
-        }
-
-        // Set the previous price to the current price for the next iteration.
-        previous_price = Some(current_price);
-
-               // Wait for the specified interval.
-        sleep(Duration::from_secs(interval)).await;
-    }
-}
-
-// Function to get the current price from the 0x API.
-async fn get_price(url: &str) -> Result<String, Box<dyn Error>> {
-    println!("Fetching current price...");
-    
-    // Send a GET request to the 0x API and get the response data.
-    let response_data = send_get_request(url).await?;
-
-    // Parse the price from the response data.
-    let price = parse_price(&response_data)?;
-
-    println!("Current price: {}", price);
-    Ok(price)
-}
-
-// Function to send a GET request to the given URL and returns the response data.
-async fn send_get_request(url: &str) -> Result<String, Box<dyn Error>> {
-    // Create a new Client.
-    let client = Client::new();
-    println!("Sending GET request to 0x API...");
-
-    // Send the GET request and get the Response.
-    let response = client.get(url).send().await?;
-
-    // Check if the status is success.
-    if !response.status().is_success() {
-        return Err("GET request failed".into());
-    }
-
-    // Get the response body as a string.
-    let body = response.text().await?;
-
-    Ok(body)
-}
-
-// Function to parse the price from the 0x API response data.
-fn parse_price(response_data: &str) -> Result<String, Box<dyn Error>> {
-    // Parse the response data into a Value.
-    let parsed_data: Value = from_str(response_data)?;
-
-    // Extract the price from the Value.
-    let price = parsed_data["price"]
-        .as_str()
-        .ok_or("Failed to extract price")?;
-
-    Ok(price.to_string())
 }
